@@ -52,25 +52,28 @@ function init()
 	// create a new mesh with sphere geometry -
 	// we will cover the sphereMaterial next!
 	sphere = new THREE.Mesh(
-	   new THREE.PlaneGeometry(1000,1000,100,100),
+	   new THREE.PlaneGeometry(500,100,500,1),
 	   shaderMaterial);
 	
-	sphere.rotation.x = 30;
+	sphere.rotation.x = 110* Math.PI / 180;
 	scene.add(sphere);
+	tick = 0;
 
 }
 
 function animate()
 {
+	tick +=0.01;
 	requestAnimationFrame(animate);
+	sphere.position.y =Math.sin(tick)*5;
+
 	render();
 }
 
 
 function render()
 {
-	shaderMaterial.uniforms[ 'time' ].value = .00025 *(Date.now()-start);
-	//console.log(.00025 * ( Date.now() - start ));	
+	shaderMaterial.uniforms[ 'time' ].value = 0.0003*(Date.now()-start);
 	renderer.render(scene,camera);
 }
 

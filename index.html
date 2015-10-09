@@ -5,6 +5,26 @@
 	<title>Perlin noise</title>
 	<script src="js/libs/three.min.js"></script>
 </head>
+<style type="text/css">
+body {
+	margin:0;
+	padding:0;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+canvas {
+	position: absolute;
+	width: 80%;
+	height: 80%;
+	left: 20%;
+	top: 20%;
+	margin-left: -10%;
+	margin-top: -10%;
+
+
+}
+</style>
 <body>
 	<!-- Shaders -->
 	<script type="x-shader/x-vertex" id="vertexshader">
@@ -118,18 +138,34 @@
 	}
 
 	uniform float time;
+	varying float vDisplacement;
+	float displacementAmout;
+
 	void main() 
 	{
-	    float displacement =  5.0 * pnoise( 0.05 * position + vec3(2.0 * time), vec3( 100.0 ) ,3.23);
+		 float d = distance(position.xy,vec2(0,0));
+		 if(d<100.0) {
+		 	displacementAmout = 100.0-d;
+		 } else {
+		 	displacementAmout = 20.0;
+		 }
+		 // float displacement =  0.0;
+	    float displacement =  displacementAmout * pnoise( 10.05 * position + vec3(2.0* time), vec3( 10.0,150.0,10.0 ) ,3.23);
+
+	    
+	    vDisplacement = displacement;
 	    vec3 newPosition = position + normal * displacement;
 	    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 	}
 	</script>
 
 	<script type="x-shader/x-fragment" id="fragmentshader">
+	uniform float time;
+	varying float vDisplacement;
 	void main() 
 	{
-		gl_FragColor = vec4( 0.2,0.6,0.8, 1.0 );
+		
+		gl_FragColor = vec4( vDisplacement*0.1,.7,0.7, 1.0 );
 	}
 
 	</script>
