@@ -1,10 +1,12 @@
+//NASTY NASTY CODE IT S BADDDDDD !!! 
+
 // STANDARD GLOBAL VARIABLE
 
 var scene,camera,renderer;
 
 var vertexShaderElement = document.getElementById("vertexshader");
 var fragmentshaderElement = document.getElementById("fragmentshader");
-var sphere;
+var plane;
 var start = Date.now();
 var uniforms;
 var shaderMaterial;
@@ -20,7 +22,8 @@ function init()
 
 	// RENDERER
 	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColor( 0xf0f0f0 );
+	// E8FFFE
+	renderer.setClearColor( 0xF2FEFF);
 	renderer.setSize(window.innerWidth,window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 	
@@ -36,7 +39,7 @@ function init()
             value: THREE.ImageUtils.loadTexture( 'js/gradient_map.jpg' )
         },
 	}
-	// create the sphere's material
+	// create the plane's material
 	shaderMaterial = new THREE.ShaderMaterial(
 	{ 
 		uniforms: uniforms,
@@ -46,17 +49,17 @@ function init()
 	
 	});
 
-	// set up the sphere vars
+	// set up the plane vars
 	
 
-	// create a new mesh with sphere geometry -
-	// we will cover the sphereMaterial next!
-	sphere = new THREE.Mesh(
+	// create a new mesh with plane geometry -
+	// we will cover the planeMaterial next!
+	plane = new THREE.Mesh(
 	   new THREE.PlaneGeometry(500,100,500,1),
 	   shaderMaterial);
 	
-	sphere.rotation.x = 110* Math.PI / 180;
-	scene.add(sphere);
+	plane.rotation.x = 110* Math.PI / 180;
+	scene.add(plane);
 	tick = 0;
 
 }
@@ -65,7 +68,7 @@ function animate()
 {
 	tick +=0.01;
 	requestAnimationFrame(animate);
-	sphere.position.y =Math.sin(tick)*5;
+	plane.position.y =Math.sin(tick)*5;
 
 	render();
 }
